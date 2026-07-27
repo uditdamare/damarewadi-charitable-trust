@@ -85,7 +85,7 @@ News existing.
 - `ContactForm` (Server Action, rate-limited via `proxy.ts`), `ContactMap` (Google Maps embed, lazy-loaded —
   pending the temple/trust office's exact coordinates, see [12](12-risks-and-future-enhancements.md) open
   items), phone/email displayed as `tel:`/`mailto:` links for mobile tap-to-call.
-- Point of contact shown here (and in the footer site-wide, pulled from `trust_settings`): **uditdamare01@gmail.com**, **+91 98921 34997**.
+- Point of contact shown here (and in the footer site-wide, pulled from `trust_settings`): **damarewadi@gmail.com**, **+91 98921 34997**.
 - SEO: `ContactPage`/`Organization` JSON-LD with `contactPoint`.
 
 ## Admin Dashboard (`/admin/...`, English-only, not locale-prefixed)
