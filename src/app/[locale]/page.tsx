@@ -24,21 +24,22 @@ export default async function HomePage({
   return (
     <div>
       {/* Hero */}
-      <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-black">
+      <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-secondary">
         <Image
           src={featuredInitiative.coverImagePath}
           alt=""
           fill
           priority
-          className="object-cover opacity-50"
+          className="object-cover opacity-40"
           sizes="100vw"
         />
-        <div className="relative z-10 mx-auto max-w-3xl px-4 py-24 text-center text-white">
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-secondary/40 to-secondary/10" />
+        <div className="relative z-10 mx-auto max-w-3xl px-4 py-24 text-center text-secondary-foreground">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{t("heroTitle")}</h1>
-          <p className="mt-4 text-lg text-white/90">{t("heroSubtitle")}</p>
+          <p className="mt-4 text-lg text-secondary-foreground/90">{t("heroSubtitle")}</p>
           <Link
             href="/initiatives"
-            className="mt-8 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-105"
+            className="mt-8 inline-block rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105 hover:bg-primary-hover"
           >
             {t("heroCta")}
           </Link>
@@ -47,19 +48,19 @@ export default async function HomePage({
 
       {/* About summary */}
       <section className="mx-auto max-w-3xl px-4 py-16 text-center sm:px-6">
-        <h2 className="text-2xl font-semibold">{t("aboutTitle")}</h2>
-        <p className="mt-4 text-black/70 dark:text-white/70">{t("aboutSummary")}</p>
-        <Link href="/about" className="mt-4 inline-block text-sm font-medium underline underline-offset-4">
+        <h2 className="text-2xl font-semibold text-foreground">{t("aboutTitle")}</h2>
+        <p className="mt-4 text-foreground/70">{t("aboutSummary")}</p>
+        <Link href="/about" className="mt-4 inline-block text-sm font-medium text-primary underline underline-offset-4">
           {t("aboutLink")}
         </Link>
       </section>
 
       {/* Featured initiative */}
-      <section className="bg-black/[0.02] py-16 dark:bg-white/[0.03]">
+      <section className="bg-surface-muted py-16">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="mb-8 text-center">
-            <h2 className="text-2xl font-semibold">{t("initiativeSectionTitle")}</h2>
-            <p className="mt-2 text-black/60 dark:text-white/60">{t("initiativeSectionSubtitle")}</p>
+            <h2 className="text-2xl font-semibold text-foreground">{t("initiativeSectionTitle")}</h2>
+            <p className="mt-2 text-muted-foreground">{t("initiativeSectionSubtitle")}</p>
           </div>
           <div className="mx-auto grid max-w-2xl gap-6">
             {initiatives.map((initiative) => (
@@ -72,8 +73,8 @@ export default async function HomePage({
       {/* Committee preview */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
         <div className="mb-8 text-center">
-          <h2 className="text-2xl font-semibold">{t("committeeSectionTitle")}</h2>
-          <p className="mt-2 text-black/60 dark:text-white/60">{t("committeeSectionSubtitle")}</p>
+          <h2 className="text-2xl font-semibold text-foreground">{t("committeeSectionTitle")}</h2>
+          <p className="mt-2 text-muted-foreground">{t("committeeSectionSubtitle")}</p>
         </div>
         <div className="grid gap-6 sm:grid-cols-3">
           {featuredCommittee.map((member) => (
@@ -81,19 +82,19 @@ export default async function HomePage({
           ))}
         </div>
         <div className="mt-8 text-center">
-          <Link href="/committee" className="text-sm font-medium underline underline-offset-4">
+          <Link href="/committee" className="text-sm font-medium text-primary underline underline-offset-4">
             {t("committeeSectionLink")}
           </Link>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="bg-black py-16 text-center text-white">
+      <section className="bg-secondary py-16 text-center text-secondary-foreground">
         <h2 className="text-2xl font-semibold">{t("ctaTitle")}</h2>
-        <p className="mt-2 text-white/70">{t("ctaSubtitle")}</p>
+        <p className="mt-2 text-secondary-foreground/80">{t("ctaSubtitle")}</p>
         <Link
           href="/contact"
-          className="mt-6 inline-block rounded-full bg-white px-6 py-3 text-sm font-semibold text-black transition-transform hover:scale-105"
+          className="mt-6 inline-block rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105 hover:bg-primary-hover"
         >
           {t("ctaButton")}
         </Link>

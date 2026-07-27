@@ -7,7 +7,7 @@ export const trustSettings: TrustSettings = {
   contactPhone: "+91 98921 34997",
   registrationNumber: null,
   panNumber: null,
-  foundedYear: null,
+  foundedYear: 2026,
   registeredAddress: null,
   mapLatitude: null,
   mapLongitude: null,

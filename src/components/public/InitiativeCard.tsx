@@ -9,7 +9,7 @@ export function InitiativeCard({ initiative }: { initiative: Initiative }) {
   return (
     <Link
       href={`/initiatives/${initiative.slug}`}
-      className="group block overflow-hidden rounded-2xl border border-black/10 bg-white transition-shadow hover:shadow-lg dark:border-white/10 dark:bg-white/[0.03]"
+      className="group block overflow-hidden rounded-2xl border border-border bg-surface transition-shadow hover:shadow-lg"
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden">
         <Image
@@ -21,8 +21,8 @@ export function InitiativeCard({ initiative }: { initiative: Initiative }) {
         />
       </div>
       <div className="p-5">
-        <h3 className="text-lg font-semibold">{t("title")}</h3>
-        <p className="mt-2 text-sm text-black/70 dark:text-white/70">{t("summary")}</p>
+        <h3 className="text-lg font-semibold text-foreground">{t("title")}</h3>
+        <p className="mt-2 text-sm text-foreground/70">{t("summary")}</p>
       </div>
     </Link>
   );

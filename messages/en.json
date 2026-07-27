@@ -32,7 +32,7 @@
   "about": {
     "title": "About Us",
     "historyTitle": "History",
-    "historyBody": "Damarewadi Charitable Trust was formed by members of the community to look after the welfare of Damarewadi and the people connected to it. Full history details will be added here soon.",
+    "historyBody": "Damarewadi Charitable Trust was formed in 2026 by members of the community, brought together by a shared wish to look after Damarewadi and the people connected to it — starting with the rebuilding of the village temple. We're a young trust, and this page will grow as our work does.",
     "missionTitle": "Mission",
     "missionBody": "To serve the Damarewadi community with honesty and dedication, preserving its heritage and improving the lives of the people who call it home.",
     "visionTitle": "Vision",
@@ -97,7 +97,8 @@
   "footer": {
     "quickLinks": "Quick Links",
     "contactInfo": "Contact Info",
-    "rightsReserved": "All Rights Reserved."
+    "rightsReserved": "All Rights Reserved.",
+    "established": "Established {year}"
   },
   "language": {
     "switchTo": "मराठी"

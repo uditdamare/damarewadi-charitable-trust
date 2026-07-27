@@ -18,12 +18,12 @@ export default async function AboutPage({
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6">
-      <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+      <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("title")}</h1>
       <div className="mt-10 space-y-10">
         {sections.map((section) => (
           <section key={section.title}>
-            <h2 className="text-xl font-semibold">{section.title}</h2>
-            <p className="mt-3 text-black/70 dark:text-white/70">{section.body}</p>
+            <h2 className="text-xl font-semibold text-foreground">{section.title}</h2>
+            <p className="mt-3 text-foreground/70">{section.body}</p>
           </section>
         ))}
       </div>

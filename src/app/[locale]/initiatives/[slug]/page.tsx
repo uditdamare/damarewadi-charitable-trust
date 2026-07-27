@@ -68,12 +68,12 @@ export default async function InitiativeDetailPage({
         />
       </div>
 
-      <h1 className="mt-8 text-3xl font-bold tracking-tight">{t("title")}</h1>
-      <div className="prose prose-neutral mt-6 max-w-none whitespace-pre-line text-black/80 dark:text-white/80">
+      <h1 className="mt-8 text-3xl font-bold tracking-tight text-foreground">{t("title")}</h1>
+      <div className="prose prose-neutral mt-6 max-w-none whitespace-pre-line text-foreground/80">
         {t("body")}
       </div>
 
-      <h2 className="mt-12 text-xl font-semibold">{t("galleryTitle")}</h2>
+      <h2 className="mt-12 text-xl font-semibold text-foreground">{t("galleryTitle")}</h2>
       <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {initiative.images.map((image) => (
           <div key={image.path} className="relative aspect-square overflow-hidden rounded-lg">

@@ -6,6 +6,9 @@ import { Geist, Geist_Mono, Noto_Sans_Devanagari } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
+import { ThemeSwitcher } from "@/components/layout/ThemeSwitcher";
+import { DEFAULT_THEME, THEME_INIT_SCRIPT } from "@/lib/themes";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -64,13 +67,19 @@ export default async function LocaleLayout({
   return (
     <html
       lang={locale}
+      data-theme={DEFAULT_THEME}
       className={`${geistSans.variable} ${geistMono.variable} ${notoSansDevanagari.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {/* Applies a previously-picked theme before paint, so returning visitors
+            don't see a flash of the default theme. See src/lib/themes.ts. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <NextIntlClientProvider>
           <Header />
           <main className="flex flex-1 flex-col">{children}</main>
           <Footer />
+          <WhatsAppButton />
+          <ThemeSwitcher />
         </NextIntlClientProvider>
       </body>
     </html>

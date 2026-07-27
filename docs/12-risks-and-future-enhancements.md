@@ -10,7 +10,8 @@ starting implementation, but each should be resolved before the corresponding pa
       Note: a *religious* trust (temple-focused) is sometimes registered under different tax provisions than
       a general charitable trust and may not qualify for 80G — worth confirming with whoever handles the
       trust's tax filings before any future donation page promises an exemption.
-- [ ] **Year the trust was founded** — for About > History.
+- [x] **Year the trust was founded** — 2026 (confirmed: the trust was established this month). Reflected in
+      `trust_settings.foundedYear`, the footer's "Established 2026" line, and the About > History copy.
 - [ ] **Registered address / temple location** — needed for the footer, Contact page, and the Google Maps
       embed (exact coordinates or a shareable Google Maps link work equally well).
 - [ ] **Trust deed / annual reports / audit reports / certificates** (actual PDF files) — for the Documents
@@ -23,6 +24,32 @@ starting implementation, but each should be resolved before the corresponding pa
 - [ ] **Temple rebuild story + photos** — confirmed as the flagship "Our Work" initiative; a few paragraphs
       (what happened in the rains, current condition, why it matters to the people living nearby) plus
       photos are what turn this from a placeholder into real content.
+
+## Content gaps found by benchmarking established NGO sites (CRY, Akshaya Patra, Goonj, Smile Foundation)
+
+All four converge on the same handful of trust-building elements — none of these block launch, but they're
+what separates a "placeholder-looking" site from an established one, and every item below needs real
+content/numbers from the trust before it can be built (no fabricated stats):
+
+- [ ] **Impact/stat counters** — the trust was established this month (2026), so "years of service" framing
+      doesn't apply yet; a numbers strip would be dishonest here. Revisit once there's real scale to report
+      (e.g. after the temple rebuild completes, or once volunteer/membership counts exist) rather than
+      copying the reference sites' pattern emptily.
+- [ ] **Campaign-style progress on the temple initiative** — Akshaya Patra shows "₹X raised of ₹Y goal" bars
+      per cause. Not buildable until there's a real fundraising goal/target amount and (eventually) a
+      payment gateway — flagged here so the `initiatives` table can grow a `goal_amount` column later
+      without a redesign.
+- [ ] **Testimonials / community quotes** — a line or two from someone who actually worships at or maintains
+      the temple, or from a committee member on why the rebuild matters. All four reference sites use
+      first-person quotes to humanize the work; needs someone to actually ask a few people and note it down.
+- [ ] **Trust/accreditation badges** — GuideStar, 80G, 12A, or similar recognitions (CRY/Smile Foundation both
+      lead with these). Not applicable until the trust actually holds such registrations/certifications —
+      don't fabricate trust signals; add only what's real once it exists.
+- [ ] **Photos of the committee members** — all four reference sites put real faces next to names; ours
+      currently shows initials placeholders (see [Committee](10-pages-breakdown.md)).
+- [ ] **A trust logo/wordmark** — every reference site has a distinct logo in the header rather than plain
+      text; worth commissioning even a simple one (Goonj's Devanagari wordmark "गूंज" is a good bilingual
+      reference for how a Marathi-first mark can read well).
 - [ ] **POC contact** — confirmed: `uditdamare01@gmail.com`, `+91 98921 34997`. Worth confirming whether this
       should be labeled as a specific role (e.g. "For website / General queries") versus one of the 9
       committee members' direct line, so the Contact page doesn't read as anonymous.

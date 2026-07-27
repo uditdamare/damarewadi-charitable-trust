@@ -6,13 +6,16 @@ import { submitContactForm, type ContactFormState } from "@/lib/actions/contact"
 
 const initialState: ContactFormState = { status: "idle" };
 
+const inputClasses =
+  "w-full rounded-lg border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground";
+
 export function ContactForm() {
   const t = useTranslations("contact");
   const [state, formAction, pending] = useActionState(submitContactForm, initialState);
 
   if (state.status === "success") {
     return (
-      <div className="rounded-2xl border border-black/10 bg-black/[0.02] p-6 text-sm dark:border-white/10 dark:bg-white/5">
+      <div className="rounded-2xl border border-border bg-surface-muted p-6 text-sm text-foreground">
         {t("formSuccess")}
       </div>
     );
@@ -29,30 +32,21 @@ export function ContactForm() {
         className="absolute left-[-9999px] h-0 w-0 opacity-0"
       />
 
-      <input
-        name="name"
-        required
-        placeholder={t("formName")}
-        className="w-full rounded-lg border border-black/15 px-4 py-3 text-sm dark:border-white/20 dark:bg-white/5"
-      />
+      <input name="name" required placeholder={t("formName")} className={inputClasses} />
       <input
         name="email"
         type="email"
         required
         placeholder={t("formEmail")}
-        className="w-full rounded-lg border border-black/15 px-4 py-3 text-sm dark:border-white/20 dark:bg-white/5"
+        className={inputClasses}
       />
-      <input
-        name="phone"
-        placeholder={t("formPhone")}
-        className="w-full rounded-lg border border-black/15 px-4 py-3 text-sm dark:border-white/20 dark:bg-white/5"
-      />
+      <input name="phone" placeholder={t("formPhone")} className={inputClasses} />
       <textarea
         name="message"
         required
         rows={5}
         placeholder={t("formMessage")}
-        className="w-full rounded-lg border border-black/15 px-4 py-3 text-sm dark:border-white/20 dark:bg-white/5"
+        className={inputClasses}
       />
 
       {state.status === "error" && (
@@ -62,7 +56,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="rounded-full bg-black px-6 py-3 text-sm font-semibold text-white transition-transform hover:scale-105 disabled:opacity-60 disabled:hover:scale-100 dark:bg-white dark:text-black"
+        className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-transform hover:scale-105 hover:bg-primary-hover disabled:opacity-60 disabled:hover:scale-100"
       >
         {pending ? t("formSubmitting") : t("formSubmit")}
       </button>
