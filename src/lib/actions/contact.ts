@@ -2,6 +2,12 @@
 
 import { z } from "zod";
 
+// Hardcoded intentionally for now (trust's own call — see chat) instead of
+// DISCORD_CONTACT_WEBHOOK_URL. Rotate this in Discord + move back to an env
+// var if the repo ever becomes public or access needs tightening.
+const DISCORD_CONTACT_WEBHOOK_URL =
+  "https://discord.com/api/webhooks/1531362644492157110/Get9UCkLo6VQGHyWKhbhcAUWWskTk4O_h7gOXO_tdwW1qomHXvEwkenFbfpvMLrf7rQm";
+
 const contactSchema = z.object({
   name: z.string().trim().min(1).max(200),
   email: z.string().trim().email().max(320),
@@ -38,16 +44,10 @@ export async function submitContactForm(
     return { status: "success" };
   }
 
-  const webhookUrl = process.env.DISCORD_CONTACT_WEBHOOK_URL;
-  if (!webhookUrl) {
-    console.error("DISCORD_CONTACT_WEBHOOK_URL is not configured");
-    return { status: "error", message: "The contact form isn't available right now — please email us directly." };
-  }
-
   const { name, email, phone, message } = parsed.data;
 
   try {
-    const response = await fetch(webhookUrl, {
+    const response = await fetch(DISCORD_CONTACT_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

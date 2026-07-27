@@ -65,9 +65,9 @@ damarewadi-charitable-trust/
 │   ├── messages/
 │   │   ├── en.json
 │   │   └── mr.json
-│   └── types/
-│       └── database.types.ts      # Generated from Supabase schema (supabase gen types typescript)
-├── proxy.ts                        # Next.js 16 rename of middleware.ts — admin auth gate + rate limiting
+│   ├── types/
+│   │   └── database.types.ts      # Generated from Supabase schema (supabase gen types typescript)
+│   └── proxy.ts                    # Next.js 16 rename of middleware.ts — admin auth gate + rate limiting
 ├── next.config.ts                  # cacheComponents, reactCompiler, images.remotePatterns, headers()
 ├── next-env.d.ts
 ├── tailwind config (via @tailwindcss/postcss, already present)
@@ -77,8 +77,9 @@ damarewadi-charitable-trust/
 
 ## Notes
 
-- **`proxy.ts` lives at the project root** (sibling to `next.config.ts`), not inside `src/app` — this is a
-  Next.js 16 convention (renamed from `middleware.ts`), and its exported function must be named `proxy`.
+- **`proxy.ts` lives inside `src/`, sibling to `app/`** — not at the repo root — because this project's app
+  directory is under `src/`. Next.js 16 requires the proxy file at the same level as `app`/`pages`, and this
+  is a rename of `middleware.ts`; its exported function must be named `proxy` (or be the default export).
 - **`[locale]` segment** groups all public-facing pages so `next-intl` can resolve `/en/events` and
   `/mr/events` from one set of page files; the **admin dashboard deliberately sits outside `[locale]`**
   since trustees will operate it in one language (English) regardless of the public site's language toggle.
