@@ -1,46 +1,194 @@
 @import "tailwindcss";
 
 /*
- * Palette per trust's spec (light mode values are authoritative):
- * Primary #2563EB (blue, trust) / Secondary #16A34A (green, growth & service) /
- * Accent #F59E0B (warm gold) / Background #FAFAF9 / Surface #FFFFFF / Text #1F2937.
- * Dark mode is a separately-tuned equivalent (same hues, adjusted for contrast on
- * a dark surface) since the spec only covered light mode.
+ * MODULAR THEME SYSTEM
+ * ====================
+ * Every color a component uses comes from a semantic CSS variable
+ * (--primary, --surface, --text, ...), never a literal hex value. Themes are
+ * swapped by changing which `[data-theme="..."]` block is active on <html> —
+ * no component file needs to change. See src/lib/themes.ts for the theme
+ * registry consumed by <ThemeSwitcher>, and docs/09-ui-components.md for the
+ * full token table.
+ *
+ * Status colors (--success/--warning/--error) are intentionally IDENTICAL
+ * across all themes — they carry universal meaning (success=green,
+ * warning=amber, error=red) that shouldn't shift with brand identity.
+ *
+ * Each theme below defines both a light block (`html[data-theme="x"]`) and a
+ * dark block (`@media (prefers-color-scheme: dark)`), so dark mode works
+ * automatically for whichever brand theme is active.
  */
-:root {
-  --background: #fafaf9;
-  --foreground: #1f2937;
-  --surface: #ffffff;
-  --surface-muted: #f3f4f6;
-  --border: #e5e7eb;
 
-  --primary: #2563eb;
-  --primary-hover: #1d4ed8;
+:root,
+html[data-theme="trust-community"] {
+  --background: #fafaf8;
+  --surface: #ffffff;
+  --muted: #f0efea;
+  --surface-muted: var(--muted);
+  --border: #e3e1db;
+  --text: #1e293b;
+  --foreground: var(--text);
+  --muted-foreground: #64748b;
+
+  --primary: #283d5e;
+  --primary-hover: #1f304a;
   --primary-foreground: #ffffff;
 
-  --secondary: #16a34a;
+  --secondary: #327f51;
+  --secondary-hover: #285f3e;
+  --secondary-foreground: #ffffff;
+
+  --accent: #eeb64b;
+  --accent-foreground: #1f2937;
+
+  --supporting-1: var(--accent);
+  --supporting-2: var(--secondary);
+}
+
+html[data-theme="heritage-tradition"] {
+  --background: #fcfaf5;
+  --surface: #ffffff;
+  --muted: #f4efe4;
+  --surface-muted: var(--muted);
+  --border: #e8e0cf;
+  --text: #241a12;
+  --foreground: var(--text);
+  --muted-foreground: #7a6b58;
+
+  --primary: #6b4226;
+  --primary-hover: #55341d;
+  --primary-foreground: #ffffff;
+
+  --secondary: #2f6b3c;
+  --secondary-hover: #244f2d;
+  --secondary-foreground: #ffffff;
+
+  --accent: #c9a227;
+  --accent-foreground: #241a12;
+
+  --supporting-1: var(--accent);
+  --supporting-2: var(--secondary);
+}
+
+html[data-theme="modern-nonprofit"] {
+  --background: #f8fafc;
+  --surface: #ffffff;
+  --muted: #eef2f6;
+  --surface-muted: var(--muted);
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --foreground: var(--text);
+  --muted-foreground: #64748b;
+
+  --primary: #1e3a5f;
+  --primary-hover: #16283f;
+  --primary-foreground: #ffffff;
+
+  --secondary: #0f766e;
+  --secondary-hover: #0c5b55;
   --secondary-foreground: #ffffff;
 
   --accent: #f59e0b;
   --accent-foreground: #1f2937;
 
-  --muted-foreground: #6b7280;
+  --supporting-1: var(--accent);
+  --supporting-2: var(--secondary);
+}
+
+html[data-theme="warm-service"] {
+  --background: #fff9f2;
+  --surface: #ffffff;
+  --muted: #fbeedf;
+  --surface-muted: var(--muted);
+  --border: #f0dcc0;
+  --text: #2b1a0e;
+  --foreground: var(--text);
+  --muted-foreground: #8a7360;
+
+  --primary: #8a3b12;
+  --primary-hover: #6e2f0e;
+  --primary-foreground: #ffffff;
+
+  --secondary: #4f7d42;
+  --secondary-hover: #3e6234;
+  --secondary-foreground: #ffffff;
+
+  --accent: #e8b84a;
+  --accent-foreground: #2b1a0e;
+
+  --supporting-1: var(--accent);
+  --supporting-2: var(--secondary);
+}
+
+html[data-theme="konkan-inspired"] {
+  --background: #fafaf8;
+  --surface: #ffffff;
+  --muted: #f0efea;
+  --surface-muted: var(--muted);
+  --border: #e3e1db;
+  --text: #1e293b;
+  --foreground: var(--text);
+  --muted-foreground: #64748b;
+
+  --primary: #283d5e;
+  --primary-hover: #1f304a;
+  --primary-foreground: #ffffff;
+
+  --secondary: #327f51;
+  --secondary-hover: #285f3e;
+  --secondary-foreground: #ffffff;
+
+  --accent: #eeb64b;
+  --accent-foreground: #1f2937;
+
+  /* Theme-specific extras: coastal sea-green + sunset coral. Other themes
+     fall back supporting-1/2 to accent/secondary so any component using
+     them never breaks when a different theme is active. */
+  --supporting-1: #64a47f;
+  --supporting-2: #fc9460;
+}
+
+/* Status colors — constant across every theme, both modes set below */
+:root {
+  --success: #16a34a;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #1f2937;
+  --error: #dc2626;
+  --error-foreground: #ffffff;
 }
 
 @theme inline {
   --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --color-surface: var(--surface);
+  --color-muted: var(--muted);
   --color-surface-muted: var(--surface-muted);
   --color-border: var(--border);
+  --color-text: var(--text);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+
   --color-primary: var(--primary);
   --color-primary-hover: var(--primary-hover);
   --color-primary-foreground: var(--primary-foreground);
+
   --color-secondary: var(--secondary);
+  --color-secondary-hover: var(--secondary-hover);
   --color-secondary-foreground: var(--secondary-foreground);
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-muted-foreground: var(--muted-foreground);
+
+  --color-supporting-1: var(--supporting-1);
+  --color-supporting-2: var(--supporting-2);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-devanagari: var(--font-devanagari);
@@ -51,29 +199,144 @@ html[lang="mr"] body {
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0f172a;
-    --foreground: #f1f5f9;
-    --surface: #1e293b;
-    --surface-muted: #24324a;
-    --border: #334155;
+  :root,
+  html[data-theme="trust-community"] {
+    --background: #0f1720;
+    --surface: #17212c;
+    --muted: #1d2733;
+    --surface-muted: var(--muted);
+    --border: #2a3542;
+    --text: #f1f0ec;
+    --foreground: var(--text);
+    --muted-foreground: #94a3b8;
 
-    --primary: #3b82f6;
-    --primary-hover: #60a5fa;
+    --primary: #4c6892;
+    --primary-hover: #5f7ba3;
     --primary-foreground: #ffffff;
 
-    --secondary: #22c55e;
-    --secondary-foreground: #052e16;
+    --secondary: #4ca06c;
+    --secondary-hover: #5fae7c;
+    --secondary-foreground: #06251a;
+
+    --accent: #f5c769;
+    --accent-foreground: #1f2937;
+
+    --supporting-1: var(--accent);
+    --supporting-2: var(--secondary);
+  }
+
+  html[data-theme="heritage-tradition"] {
+    --background: #14100b;
+    --surface: #1d170f;
+    --muted: #241c13;
+    --surface-muted: var(--muted);
+    --border: #332818;
+    --text: #f5efe3;
+    --foreground: var(--text);
+    --muted-foreground: #b3a48f;
+
+    --primary: #9c6b45;
+    --primary-hover: #ad7f5c;
+    --primary-foreground: #ffffff;
+
+    --secondary: #4e9863;
+    --secondary-hover: #60a574;
+    --secondary-foreground: #ffffff;
+
+    --accent: #ddb84a;
+    --accent-foreground: #241a12;
+
+    --supporting-1: var(--accent);
+    --supporting-2: var(--secondary);
+  }
+
+  html[data-theme="modern-nonprofit"] {
+    --background: #0b1220;
+    --surface: #131b2c;
+    --muted: #182236;
+    --surface-muted: var(--muted);
+    --border: #24314a;
+    --text: #eef2f6;
+    --foreground: var(--text);
+    --muted-foreground: #94a3b8;
+
+    --primary: #4a72a6;
+    --primary-hover: #5d84b5;
+    --primary-foreground: #ffffff;
+
+    --secondary: #17a398;
+    --secondary-hover: #2fb2a7;
+    --secondary-foreground: #06211e;
 
     --accent: #fbbf24;
     --accent-foreground: #1f2937;
 
+    --supporting-1: var(--accent);
+    --supporting-2: var(--secondary);
+  }
+
+  html[data-theme="warm-service"] {
+    --background: #1a1008;
+    --surface: #23160c;
+    --muted: #2b1c10;
+    --surface-muted: var(--muted);
+    --border: #3b2818;
+    --text: #fbeedf;
+    --foreground: var(--text);
+    --muted-foreground: #b8a48e;
+
+    --primary: #c1602a;
+    --primary-hover: #cb7645;
+    --primary-foreground: #ffffff;
+
+    --secondary: #6fa35c;
+    --secondary-hover: #7faf6f;
+    --secondary-foreground: #0c1b08;
+
+    --accent: #f0c669;
+    --accent-foreground: #2b1a0e;
+
+    --supporting-1: var(--accent);
+    --supporting-2: var(--secondary);
+  }
+
+  html[data-theme="konkan-inspired"] {
+    --background: #0f1720;
+    --surface: #17212c;
+    --muted: #1d2733;
+    --surface-muted: var(--muted);
+    --border: #2a3542;
+    --text: #f1f0ec;
+    --foreground: var(--text);
     --muted-foreground: #94a3b8;
+
+    --primary: #4c6892;
+    --primary-hover: #5f7ba3;
+    --primary-foreground: #ffffff;
+
+    --secondary: #4ca06c;
+    --secondary-hover: #5fae7c;
+    --secondary-foreground: #06251a;
+
+    --accent: #f5c769;
+    --accent-foreground: #1f2937;
+
+    --supporting-1: #7ec49a;
+    --supporting-2: #fdb185;
+  }
+
+  :root {
+    --success: #22c55e;
+    --success-foreground: #052e16;
+    --warning: #fbbf24;
+    --warning-foreground: #1f2937;
+    --error: #f87171;
+    --error-foreground: #450a0a;
   }
 }
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text);
   font-family: Arial, Helvetica, sans-serif;
 }

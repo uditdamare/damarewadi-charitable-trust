@@ -3,28 +3,52 @@
 shadcn/ui components are copied into `src/components/ui/` (not an npm dependency), so this list is what to
 generate via the shadcn CLI, plus the custom components built on top.
 
-## Theme: color palette & typography
+## Theme: modular multi-theme system
 
-Palette is the trust's own spec (light-mode values are authoritative; dark mode is a separately-tuned
-equivalent, same hues adjusted for contrast on a dark surface, since the spec only covered light mode):
+Colors are never hardcoded in a component — every component references a **semantic token**
+(`bg-primary`, `text-foreground`, `bg-surface-muted`, ...) that resolves to a CSS custom property. Swapping
+the entire site's brand identity is a one-line change (the `data-theme` attribute on `<html>`), with zero
+component edits, because Tailwind's `@theme inline` keeps the utility classes as live `var()` references
+instead of baking in literal colors at build time.
 
-| Token | Light | Dark | Role |
-|---|---|---|---|
-| `primary` | `#2563EB` (blue — trust) | `#3B82F6` | primary CTA (header button, form submit) |
-| `secondary` | `#16A34A` (green — growth & service) | `#22C55E` | hero/CTA section backgrounds |
-| `accent` | `#F59E0B` (warm gold) | `#FBBF24` | reserved for highlight/status use, not yet applied to a component |
-| `background` / `foreground` | `#FAFAF9` / `#1F2937` | `#0F172A` / `#F1F5F9` | page background / body text |
-| `surface` / `surface-muted` | `#FFFFFF` / `#F3F4F6` | `#1E293B` / `#24324A` | cards/header vs. section backgrounds |
-| `border` / `muted-foreground` | `#E5E7EB` / `#6B7280` | `#334155` / `#94A3B8` | dividers / secondary text |
+### Token table
 
-(An earlier iteration used a marigold/terracotta palette drawn from the temple photos — superseded by the
-above per explicit direction; kept here only as history in case it's revisited.)
+| Token | Role |
+|---|---|
+| `--primary` / `--primary-foreground` / `--primary-hover` | main CTA color (header button, form submit) + its readable text + hover shade |
+| `--secondary` / `--secondary-foreground` / `--secondary-hover` | hero/CTA section backgrounds + its readable text |
+| `--accent` / `--accent-foreground` | highlight color, reserved for future badge/tag use |
+| `--background` / `--text` (alias `--foreground`) | page background / body text |
+| `--surface` / `--muted` (alias `--surface-muted`) | card backgrounds vs. muted section backgrounds |
+| `--border` / `--muted-foreground` | dividers / secondary (subtitle-weight) text |
+| `--success` / `--warning` / `--error` (+ `-foreground` pairs) | status colors — **identical across every theme**, since success/warning/error carry universal meaning that shouldn't shift with brand identity |
+| `--supporting-1` / `--supporting-2` | optional theme-specific extra accents (only the Konkan theme actually diverges here; every other theme aliases them to `--accent`/`--secondary` so referencing them never breaks) |
 
-Implemented as CSS custom properties in `src/app/globals.css` (`--primary`, `--secondary`, `--accent`,
-`--background`, `--foreground`, `--surface`, `--surface-muted`, `--border`, `--muted-foreground`), exposed to
-Tailwind via `@theme inline` so components use `bg-primary`, `text-foreground`, etc. — never raw
-`black`/`white` utility classes. Dark mode is a separate hand-tuned set (`prefers-color-scheme: dark`), not
-an automatic invert.
+### The 5 themes
+
+Defined in `src/app/globals.css` as `html[data-theme="<id>"]` blocks (light) with a matching
+`@media (prefers-color-scheme: dark)` block per theme (dark values are a separately hand-tuned equivalent —
+same hues, adjusted for contrast on a dark surface — since only light-mode specs were given). Theme metadata
+(id, label, swatch preview colors) lives in `src/lib/themes.ts` — the single registry `<ThemeSwitcher>`
+reads from, and the only place to touch when adding a 6th theme later.
+
+| # | Theme | Primary | Secondary | Accent |
+|---|---|---|---|---|
+| 1 | Trust & Community | `#283D5E` | `#327F51` | `#EEB64B` |
+| 2 | Heritage & Tradition | `#6B4226` | `#2F6B3C` | `#C9A227` |
+| 3 | Modern Non-Profit | `#1E3A5F` | `#0F766E` | `#F59E0B` |
+| 4 | Warm Service | `#8A3B12` | `#4F7D42` | `#E8B84A` |
+| 5 | Konkan Inspired | `#283D5E` | `#327F51` | `#EEB64B` (+ supporting `#64A47F`, `#FC9460`) |
+
+### Previewing themes
+
+`<ThemeSwitcher>` (`components/layout/ThemeSwitcher.tsx`) is a floating swatch picker (bottom-left, opposite
+the WhatsApp button) that live-switches `data-theme` and persists the choice to `localStorage` — open the
+site and click through all 5 to compare. **This is a preview-only tool for choosing a brand identity**, not
+meant to ship to end visitors once a theme is finalized — remove it (or gate it behind an env flag) once a
+theme is picked, and set that theme as the new `DEFAULT_THEME` in `src/lib/themes.ts`. A tiny inline script
+in the root layout applies any saved theme before first paint, so returning visitors don't see a flash of
+the default theme.
 
 **Typography**: Geist Sans (English) + Noto Sans Devanagari (Marathi), already wired in `[locale]/layout.tsx`
 — deliberately kept as a single font pairing per locale rather than adding a display/serif font, since a

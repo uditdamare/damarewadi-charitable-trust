@@ -24,7 +24,7 @@ export default async function HomePage({
   return (
     <div>
       {/* Hero */}
-      <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-secondaryd bg-[#5d5d5d]">
+      <section className="relative flex min-h-[60vh] items-center justify-center overflow-hidden bg-secondary">
         <Image
           src={featuredInitiative.coverImagePath}
           alt=""
@@ -33,7 +33,7 @@ export default async function HomePage({
           className="object-cover opacity-40"
           sizes="100vw"
         />
-        {/* <div className="absolute inset-0 bg-gradient-to-t from-secondary/10 via-secondary/0 to-secondary/10" /> */}
+        <div className="absolute inset-0 bg-gradient-to-t from-secondary/80 via-secondary/40 to-secondary/10" />
         <div className="relative z-10 mx-auto max-w-3xl px-4 py-24 text-center text-secondary-foreground">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{t("heroTitle")}</h1>
           <p className="mt-4 text-lg text-secondary-foreground/90">{t("heroSubtitle")}</p>
