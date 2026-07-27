@@ -16,8 +16,8 @@ export default async function CommitteePage({
   return (
     <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
       <div className="text-center">
-        <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
-        <p className="mt-3 text-black/60 dark:text-white/60">{t("subtitle")}</p>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">{t("title")}</h1>
+        <p className="mt-3 text-muted-foreground">{t("subtitle")}</p>
       </div>
       <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {ordered.map((member) => (

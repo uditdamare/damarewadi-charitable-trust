@@ -3,6 +3,46 @@
 shadcn/ui components are copied into `src/components/ui/` (not an npm dependency), so this list is what to
 generate via the shadcn CLI, plus the custom components built on top.
 
+## Theme: color palette & typography
+
+Palette is the trust's own spec (light-mode values are authoritative; dark mode is a separately-tuned
+equivalent, same hues adjusted for contrast on a dark surface, since the spec only covered light mode):
+
+| Token | Light | Dark | Role |
+|---|---|---|---|
+| `primary` | `#2563EB` (blue — trust) | `#3B82F6` | primary CTA (header button, form submit) |
+| `secondary` | `#16A34A` (green — growth & service) | `#22C55E` | hero/CTA section backgrounds |
+| `accent` | `#F59E0B` (warm gold) | `#FBBF24` | reserved for highlight/status use, not yet applied to a component |
+| `background` / `foreground` | `#FAFAF9` / `#1F2937` | `#0F172A` / `#F1F5F9` | page background / body text |
+| `surface` / `surface-muted` | `#FFFFFF` / `#F3F4F6` | `#1E293B` / `#24324A` | cards/header vs. section backgrounds |
+| `border` / `muted-foreground` | `#E5E7EB` / `#6B7280` | `#334155` / `#94A3B8` | dividers / secondary text |
+
+(An earlier iteration used a marigold/terracotta palette drawn from the temple photos — superseded by the
+above per explicit direction; kept here only as history in case it's revisited.)
+
+Implemented as CSS custom properties in `src/app/globals.css` (`--primary`, `--secondary`, `--accent`,
+`--background`, `--foreground`, `--surface`, `--surface-muted`, `--border`, `--muted-foreground`), exposed to
+Tailwind via `@theme inline` so components use `bg-primary`, `text-foreground`, etc. — never raw
+`black`/`white` utility classes. Dark mode is a separate hand-tuned set (`prefers-color-scheme: dark`), not
+an automatic invert.
+
+**Typography**: Geist Sans (English) + Noto Sans Devanagari (Marathi), already wired in `[locale]/layout.tsx`
+— deliberately kept as a single font pairing per locale rather than adding a display/serif font, since a
+second Latin typeface has no equally-legible Devanagari companion and would look mismatched on `/mr` pages.
+
+## Patterns adopted from reference NGO sites
+
+- **Header CTA button** — a filled `primary`-colored button in the nav (all four references use this for
+  "Donate Now"; this site uses it for "Contact" until a real donation flow exists — swap the label once
+  [Online Donations](12-risks-and-future-enhancements.md) ships).
+- **`WhatsAppButton`** (`components/layout/WhatsAppButton.tsx`) — floating `wa.me` link using the POC phone
+  number, no WhatsApp Business API needed yet; matches Akshaya Patra's floating chat button and is a
+  zero-backend stand-in for the future "WhatsApp Notifications" feature.
+- **Footer social icon row** — renders only if `trustSettings.socialLinks` has entries (empty-state principle
+  from [10](10-pages-breakdown.md) — no placeholder icons for accounts that don't exist yet).
+- **Not yet adopted, needs real content first** (see the "what's missing" list in chat): impact/stat counters,
+  campaign progress bars per initiative, beneficiary/testimonial quotes, trust/accreditation badges.
+
 ## shadcn/ui primitives needed
 
 `button`, `card`, `badge`, `input`, `textarea`, `select`, `dialog`, `alert-dialog`, `dropdown-menu`, `tabs`,
@@ -12,9 +52,10 @@ report year), `sheet` (mobile nav drawer).
 
 ## Layout components (`components/layout/`)
 
-- `Header` — logo, nav links, `LanguageSwitcher`, mobile menu trigger.
-- `Footer` — trust registration details, quick links, social/contact, copyright.
+- `Header` — logo, nav links, `LanguageSwitcher`, prominent CTA button, mobile menu trigger.
+- `Footer` — trust registration details, quick links, social/contact (icons shown only if configured), copyright.
 - `LanguageSwitcher` — toggles `/en` ↔ `/mr` preserving the current path (next-intl).
+- `WhatsAppButton` — floating `wa.me` contact link, site-wide.
 - `MobileNav` — `sheet`-based drawer nav for small screens.
 - `Breadcrumbs` — used on Events/Gallery/Documents/News detail pages for SEO + UX.
 

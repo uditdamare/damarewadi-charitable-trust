@@ -14,10 +14,9 @@ const NAV_ITEMS = [
   "gallery",
   "documents",
   "news",
-  "contact",
 ] as const;
 
-const HREFS: Record<(typeof NAV_ITEMS)[number], string> = {
+const HREFS: Record<(typeof NAV_ITEMS)[number] | "contact", string> = {
   home: "/",
   about: "/about",
   committee: "/committee",
@@ -35,9 +34,9 @@ export function Header() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-black/10 bg-white/90 backdrop-blur dark:border-white/10 dark:bg-black/80">
+    <header className="sticky top-0 z-40 border-b border-border bg-surface/90 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6">
-        <Link href="/" className="text-lg font-semibold tracking-tight">
+        <Link href="/" className="text-lg font-semibold tracking-tight text-foreground">
           {tMeta("siteName")}
         </Link>
 
@@ -46,12 +45,18 @@ export function Header() {
             <Link
               key={item}
               href={HREFS[item]}
-              className="text-sm font-medium text-black/70 transition-colors hover:text-black dark:text-white/70 dark:hover:text-white"
+              className="text-sm font-medium text-foreground/70 transition-colors hover:text-foreground"
             >
               {t(item)}
             </Link>
           ))}
           <LanguageSwitcher />
+          <Link
+            href={HREFS.contact}
+            className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary-hover"
+          >
+            {t("contact")}
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3 lg:hidden">
@@ -61,7 +66,7 @@ export function Header() {
             onClick={() => setOpen((o) => !o)}
             aria-label="Toggle menu"
             aria-expanded={open}
-            className="rounded-md border border-black/10 p-2 dark:border-white/20"
+            className="rounded-md border border-border p-2 text-foreground"
           >
             <span className="sr-only">Menu</span>
             <div className="flex h-4 w-5 flex-col justify-between">
@@ -74,17 +79,24 @@ export function Header() {
       </div>
 
       {open && (
-        <nav className="flex flex-col gap-1 border-t border-black/10 px-4 py-3 lg:hidden dark:border-white/10">
+        <nav className="flex flex-col gap-1 border-t border-border px-4 py-3 lg:hidden">
           {NAV_ITEMS.map((item) => (
             <Link
               key={item}
               href={HREFS[item]}
               onClick={() => setOpen(false)}
-              className="rounded-md px-2 py-2 text-sm font-medium hover:bg-black/5 dark:hover:bg-white/10"
+              className="rounded-md px-2 py-2 text-sm font-medium text-foreground hover:bg-surface-muted"
             >
               {t(item)}
             </Link>
           ))}
+          <Link
+            href={HREFS.contact}
+            onClick={() => setOpen(false)}
+            className="mt-2 rounded-full bg-primary px-4 py-2 text-center text-sm font-semibold text-primary-foreground"
+          >
+            {t("contact")}
+          </Link>
         </nav>
       )}
     </header>

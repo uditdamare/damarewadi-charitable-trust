@@ -6,6 +6,7 @@ import { Geist, Geist_Mono, Noto_Sans_Devanagari } from "next/font/google";
 import { routing } from "@/i18n/routing";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -71,6 +72,7 @@ export default async function LocaleLayout({
           <Header />
           <main className="flex flex-1 flex-col">{children}</main>
           <Footer />
+          <WhatsAppButton />
         </NextIntlClientProvider>
       </body>
     </html>

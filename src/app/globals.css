@@ -1,13 +1,46 @@
 @import "tailwindcss";
 
+/*
+ * Palette per trust's spec (light mode values are authoritative):
+ * Primary #2563EB (blue, trust) / Secondary #16A34A (green, growth & service) /
+ * Accent #F59E0B (warm gold) / Background #FAFAF9 / Surface #FFFFFF / Text #1F2937.
+ * Dark mode is a separately-tuned equivalent (same hues, adjusted for contrast on
+ * a dark surface) since the spec only covered light mode.
+ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #fafaf9;
+  --foreground: #1f2937;
+  --surface: #ffffff;
+  --surface-muted: #f3f4f6;
+  --border: #e5e7eb;
+
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --primary-foreground: #ffffff;
+
+  --secondary: #16a34a;
+  --secondary-foreground: #ffffff;
+
+  --accent: #f59e0b;
+  --accent-foreground: #1f2937;
+
+  --muted-foreground: #6b7280;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted-foreground: var(--muted-foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-devanagari: var(--font-devanagari);
@@ -19,8 +52,23 @@ html[lang="mr"] body {
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    --foreground: #f1f5f9;
+    --surface: #1e293b;
+    --surface-muted: #24324a;
+    --border: #334155;
+
+    --primary: #3b82f6;
+    --primary-hover: #60a5fa;
+    --primary-foreground: #ffffff;
+
+    --secondary: #22c55e;
+    --secondary-foreground: #052e16;
+
+    --accent: #fbbf24;
+    --accent-foreground: #1f2937;
+
+    --muted-foreground: #94a3b8;
   }
 }
 
