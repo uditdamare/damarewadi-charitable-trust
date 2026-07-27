@@ -37,12 +37,69 @@ RLS: readable/writable only by the row's own user or a service-role context.
 |---|---|---|
 | id | uuid PK | |
 | full_name | text | |
-| position | text | e.g. President, Secretary, Treasurer, Member |
+| full_name_mr | text nullable | Marathi spelling of the name, for correct Devanagari rendering |
+| position_key | text | stable key, not free text — see position list below |
+| position_label_mr | text | Marathi title, e.g. `अध्यक्ष` — `position_key` maps to an English label in code, this column carries the Marathi one since committee titles are trust-specific, not a fixed enum |
 | bio | text nullable | |
 | photo_path | text nullable | Supabase Storage path, `committee/` bucket |
 | display_order | int | for manual ordering |
 | status, deleted_at, created_at, updated_at | — | standard lifecycle columns |
 RLS: public `select` where `status='published' and deleted_at is null`; `insert/update/delete` admin-only.
+
+`position_key` is a Postgres enum covering the trust's actual 9-member structure (confirmed with the trust):
+`'adhyaksh' | 'upadhyaksh' | 'sachiv' | 'up_sachiv' | 'khajindaar' | 'up_khajindaar' | 'sadasya'` — mapped to
+English (President / Vice President / Secretary / Vice Secretary / Treasurer / Vice Treasurer / Member) for
+the `/en` locale and to the Marathi title for `/mr`, via a small lookup table in code
+(`lib/i18n/committee-positions.ts`), not hardcoded per-row — this keeps the 3 `'sadasya'` (Member) rows
+correctly labeled without needing 3 separate enum values.
+
+### `initiatives`
+The trust's ongoing causes/projects — e.g. the temple rebuild — distinct from `events` (dated, one-off
+gatherings) and `news` (announcements). Modeled after how comparable trust websites present ongoing work as
+its own content type (see reference sites reviewed for this plan), and designed so a future "Donate towards
+this initiative" button can attach to a specific row without a schema change.
+| Column | Type | Notes |
+|---|---|---|
+| id | uuid PK | |
+| slug | text unique | e.g. `temple-rebuild` |
+| title / title_mr | text | |
+| summary / summary_mr | text | short teaser for card/preview use (Home, list page) |
+| body / body_mr | text (rich text HTML, sanitized) | full story: background, damage, current state, need |
+| initiative_status | text | `'ongoing' \| 'completed'` — distinct from the lifecycle `status` (draft/published) |
+| cover_image_path | text nullable | `initiatives/<slug>/` bucket |
+| display_order | int | manual ordering on the "Our Work" list page |
+| status, deleted_at, created_at, updated_at, created_by | — | standard lifecycle columns |
+Index: `(initiative_status, status, deleted_at)`.
+
+### `initiative_images`
+| Column | Type | Notes |
+|---|---|---|
+| id | uuid PK | |
+| initiative_id | uuid FK → `initiatives.id` on delete cascade | |
+| image_path | text | `initiatives/<slug>/` bucket path |
+| caption / caption_mr | text nullable | |
+| display_order | int | |
+Index: `(initiative_id, display_order)`.
+
+### `trust_settings`
+A single-row table for trust-wide facts that show up across the footer, Contact page, and JSON-LD —
+CMS-editable rather than hardcoded, since registration numbers/contact details can change and a trustee
+should be able to update them without a code deploy.
+| Column | Type | Notes |
+|---|---|---|
+| id | uuid PK | exactly one row, enforced by app convention (or a `check` constraint tying `id` to a fixed value) |
+| trust_name / trust_name_mr | text | |
+| registration_number | text nullable | Trust registration number (not yet provided — placeholder until available) |
+| pan_number | text nullable | For future 80G donation receipts, if/when the trust is 80G-registered |
+| founded_year | int nullable | |
+| registered_address / registered_address_mr | text nullable | |
+| map_latitude, map_longitude | numeric nullable | for the Contact page Google Maps embed |
+| contact_email | text | POC email shown site-wide |
+| contact_phone | text | POC phone shown site-wide |
+| social_links | jsonb nullable | `{ "facebook": "...", "instagram": "...", "youtube": "..." }`, only populated once such accounts exist |
+| updated_at | timestamptz | |
+RLS: public `select` (this is all public-facing info); `update` admin-only; no `insert`/`delete` beyond the
+single seed row.
 
 ### `events`
 | Column | Type | Notes |
@@ -148,6 +205,7 @@ erDiagram
     ROLES ||--o{ ADMIN_USERS : has
     EVENTS ||--o{ EVENT_IMAGES : has
     GALLERY_ALBUMS ||--o{ GALLERY_IMAGES : has
+    INITIATIVES ||--o{ INITIATIVE_IMAGES : has
     EVENTS ||--o{ EVENT_REGISTRATIONS : "future"
 ```
 
@@ -170,5 +228,7 @@ create policy "admin_full_access" on events
 ```
 
 This same two-policy pattern (public-read-published + admin-full-access) repeats on `committee_members`,
-`events`, `event_images`, `gallery_albums`, `gallery_images`, `documents`, and `news`. `contact_messages`
-gets a narrower insert-only-via-server policy instead of public select.
+`events`, `event_images`, `gallery_albums`, `gallery_images`, `documents`, `news`, `initiatives`, and
+`initiative_images`. `contact_messages` gets a narrower insert-only-via-server policy instead of public
+select. `trust_settings` is public-select (no draft/published distinction — it's always-public info) but
+admin-only update.

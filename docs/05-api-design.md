@@ -34,6 +34,10 @@ Every Server Action and Route Handler in this project:
 | Manage news/notices | Server Action | `lib/actions/news.ts` | Admin only |
 | Get committee members | `'use cache'` read function | `lib/cache/committee.ts` | Public |
 | Manage committee members | Server Action | `lib/actions/committee.ts` | Admin only |
+| Get initiatives (list/detail) — e.g. temple rebuild | `'use cache'` read function | `lib/cache/initiatives.ts` | Public |
+| Create/update/delete initiative + images | Server Action | `lib/actions/initiatives.ts` | Admin only |
+| Get trust settings (contact/registration/social) | `'use cache'` read function | `lib/cache/settings.ts` | Public |
+| Update trust settings | Server Action | `lib/actions/settings.ts` | Admin only |
 | Submit contact form | Server Action | `lib/actions/contact.ts` | Public, rate-limited via `proxy.ts` |
 | Mark contact message read / list inbox | Server Action | `lib/actions/contact.ts` | Admin only |
 | Admin login/logout | Supabase Auth helper (client + server) | `lib/supabase/*.ts`, `app/admin/login/page.tsx` | Public login form, session set server-side |

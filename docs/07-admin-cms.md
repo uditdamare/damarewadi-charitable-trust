@@ -20,8 +20,14 @@ every content type match the trust's exact fields (chief guest, venue, etc.) ins
 ## Admin dashboard structure
 
 - **Dashboard home**: counts of draft items awaiting publish, unread contact messages, upcoming events.
-- **Per-resource CRUD pages** (Events, Gallery, Documents, News, Notices, Committee): list view (with
-  filters/search/pagination) → create/edit form → delete (soft) with confirm dialog.
+- **Per-resource CRUD pages** (Events, Gallery, Documents, News, Notices, Committee, Initiatives): list view
+  (with filters/search/pagination) → create/edit form → delete (soft) with confirm dialog.
+- **Initiatives** (Our Work / temple rebuild) is a first-class CRUD resource in the admin, not a hardcoded
+  page — a trustee can add photos and update the temple rebuild's story over time, and add a second
+  initiative later without any code change.
+- **Settings**: a single-record form (not a list) editing `trust_settings` — contact email/phone (POC),
+  registration number, PAN, founded year, address, map coordinates, social links. This is where the site-
+  wide footer/contact info actually lives, so it stays editable without redeploying.
 - **Contact inbox**: read-only list of `contact_messages`, mark-as-read, no reply-from-app (trustee replies
   via their own email — avoids building an email-sending feature prematurely).
 

@@ -12,6 +12,7 @@ documents/       (public-read bucket)
 committee/       (public-read bucket)
 reports/         (public-read bucket) -- annual/audit reports specifically, kept separate from generic documents/
 news/            (public-read bucket)
+initiatives/     (public-read bucket) -- ongoing causes, e.g. temple rebuild photos
 ```
 
 All buckets are **public-read** (the trust's content is meant to be publicly visible — there's no private
@@ -48,12 +49,33 @@ reports/
     audit-report-2025-<uuid8>.pdf
 
 committee/
-  president-<uuid8>.webp
-  secretary-<uuid8>.webp
+  adhyaksh-<uuid8>.webp
+  upadhyaksh-<uuid8>.webp
+  sachiv-<uuid8>.webp
+  up-sachiv-<uuid8>.webp
+  khajindaar-<uuid8>.webp
+  up-khajindaar-<uuid8>.webp
+  sadasya-1-<uuid8>.webp   -- three members: suffix disambiguates, actual name/order set via display_order
 
 news/
   <news-slug>-<uuid8>.webp
+
+initiatives/
+  temple-rebuild/
+    cover-<uuid8>.webp
+    photo-1-<uuid8>.webp
+    photo-2-<uuid8>.webp
 ```
+
+## Photo prep guidance (for content the trust supplies, e.g. committee headshots and temple photos)
+
+- **Committee headshots**: portrait/square crop, minimum 500×500px, plain/neutral background preferred —
+  consistent framing across all 9 members reads far more professional than mixed phone-camera crops.
+- **Temple/initiative photos**: landscape preferred for the cover image (used as the OG/share image too,
+  ideal ~1200×630px or larger at the same ~1.91:1 ratio); additional detail photos can be any orientation.
+- Any reasonably high-resolution JPEG/PNG from a phone works — the admin upload pipeline converts/optimizes
+  on ingest (see [Admin CMS Plan](07-admin-cms.md)), so source photos don't need pre-editing beyond cropping
+  out anything sensitive/unwanted.
 
 ## Naming rules
 

@@ -1,5 +1,32 @@
 # 12. Risks & Future Enhancements
 
+## Open items needed from the trust (blocking real content, not architecture)
+
+These can't be filled in by guessing — they're facts only the trust can supply. Nothing below blocks
+starting implementation, but each should be resolved before the corresponding page/section goes live:
+
+- [ ] **Trust registration number** — for the footer and `trust_settings` (see [04](04-database-schema.md)).
+- [ ] **PAN number and 80G status** — determines whether donation messaging can ever claim tax exemption.
+      Note: a *religious* trust (temple-focused) is sometimes registered under different tax provisions than
+      a general charitable trust and may not qualify for 80G — worth confirming with whoever handles the
+      trust's tax filings before any future donation page promises an exemption.
+- [ ] **Year the trust was founded** — for About > History.
+- [ ] **Registered address / temple location** — needed for the footer, Contact page, and the Google Maps
+      embed (exact coordinates or a shareable Google Maps link work equally well).
+- [ ] **Trust deed / annual reports / audit reports / certificates** (actual PDF files) — for the Documents
+      page; can be added after launch, page works fine with zero documents until then (same empty-state
+      principle as Events — see [10](10-pages-breakdown.md)).
+- [ ] **Social media links** (if any exist) — Facebook/Instagram/YouTube, optional, only shown if provided.
+- [ ] **Committee member names + one photo each** — 9 members confirmed by role (अध्यक्ष, उपाध्यक्ष, सचिव,
+      उप-सचिव, खजिनदार, उप-खजिनदार, 3× सदस्य); names and photos still needed to populate
+      [Committee](10-pages-breakdown.md).
+- [ ] **Temple rebuild story + photos** — confirmed as the flagship "Our Work" initiative; a few paragraphs
+      (what happened in the rains, current condition, why it matters to the people living nearby) plus
+      photos are what turn this from a placeholder into real content.
+- [ ] **POC contact** — confirmed: `uditdamare01@gmail.com`, `+91 98921 34997`. Worth confirming whether this
+      should be labeled as a specific role (e.g. "For website / General queries") versus one of the 9
+      committee members' direct line, so the Contact page doesn't read as anonymous.
+
 ## Risks
 
 | Risk | Impact | Mitigation |

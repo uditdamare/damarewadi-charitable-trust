@@ -28,6 +28,10 @@ yarn-error.log*
 .env*.local
 .env
 
+# private records — never publish (home addresses, personal phone/email, ages
+# of real trustees); kept locally for the trust's own reference only
+/internal/
+
 # vercel
 .vercel
 

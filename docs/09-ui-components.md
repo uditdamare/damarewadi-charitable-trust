@@ -26,7 +26,10 @@ report year), `sheet` (mobile nav drawer).
 - `AlbumGrid`, `AlbumCard`, `GalleryLightbox` (image viewer, keyboard-navigable for accessibility).
 - `DocumentList`, `DocumentCard` (PDF icon, size, download link, category filter chips).
 - `NewsCard`, `NewsList`, `NoticeBadge` (visually distinguishes notices from news).
-- `CommitteeMemberCard`, `CommitteeGrid`.
+- `CommitteeMemberCard` (shows name + role title, localized via the `position_key` lookup — see
+  [Database Schema](04-database-schema.md)), `CommitteeGrid`.
+- `InitiativeCard`, `InitiativeList`, `InitiativeDetail` (story + background), `InitiativeGallery` — for
+  "Our Work" (temple rebuild and future causes).
 - `ContactForm` (`react-hook-form` + `zod`, submits via Server Action), `ContactMap` (Google Maps embed).
 - `SEOJsonLd` — small helper component emitting the appropriate JSON-LD script per page type
   (Organization on Home, Event on event detail pages, etc.).

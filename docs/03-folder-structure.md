@@ -24,6 +24,9 @@ damarewadi-charitable-trust/
 │   │   │   ├── news/
 │   │   │   │   ├── page.tsx
 │   │   │   │   └── [slug]/page.tsx
+│   │   │   ├── initiatives/           # "Our Work" — ongoing causes, e.g. the temple rebuild
+│   │   │   │   ├── page.tsx
+│   │   │   │   └── [slug]/page.tsx
 │   │   │   └── contact/page.tsx
 │   │   ├── admin/                 # NOT locale-prefixed — admin UI is English-only, internal tool
 │   │   │   ├── layout.tsx         # Wraps every admin route with the session check
@@ -34,7 +37,9 @@ damarewadi-charitable-trust/
 │   │   │   ├── documents/
 │   │   │   ├── news/
 │   │   │   ├── notices/
-│   │   │   └── committee/
+│   │   │   ├── committee/
+│   │   │   ├── initiatives/       # manage the temple rebuild + future causes
+│   │   │   └── settings/          # edit the single trust_settings row (contact/registration/PAN/social)
 │   │   ├── api/                   # Route Handlers only where a Server Action doesn't fit
 │   │   │   └── contact/route.ts   # e.g. if a non-form client needs a JSON endpoint later
 │   │   ├── sitemap.ts
@@ -50,7 +55,7 @@ damarewadi-charitable-trust/
 │   │   │   ├── client.ts          # Browser client (anon key)
 │   │   │   ├── server.ts          # Server-side client (reads cookies via awaited cookies())
 │   │   │   └── admin.ts           # Service-role client, server-only, used sparingly (uploads, admin ops)
-│   │   ├── actions/                # Server Actions grouped by resource: events.ts, gallery.ts, news.ts, contact.ts
+│   │   ├── actions/                # Server Actions grouped by resource: events.ts, gallery.ts, news.ts, initiatives.ts, contact.ts, settings.ts
 │   │   ├── validation/             # zod schemas shared by Server Actions + forms: event.schema.ts, etc.
 │   │   ├── cache/                  # 'use cache' wrapped data-fetching functions per resource
 │   │   └── utils.ts

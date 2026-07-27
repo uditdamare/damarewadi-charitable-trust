@@ -10,6 +10,11 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-devanagari: var(--font-devanagari);
+}
+
+html[lang="mr"] body {
+  font-family: var(--font-devanagari), var(--font-geist-sans), Arial, sans-serif;
 }
 
 @media (prefers-color-scheme: dark) {
